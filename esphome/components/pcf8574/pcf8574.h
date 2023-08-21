@@ -15,6 +15,8 @@ class PCF8574Component : public Component, public i2c::I2CDevice {
 
   /// Check i2c availability and setup masks
   void setup() override;
+   /// Poll for input changes periodically
+  void loop() override;
   /// Helper function to read the value of a pin.
   bool digital_read(uint8_t pin);
   /// Helper function to write the value of a pin.
@@ -23,6 +25,8 @@ class PCF8574Component : public Component, public i2c::I2CDevice {
   void pin_mode(uint8_t pin, gpio::Flags flags);
 
   float get_setup_priority() const override;
+
+  float get_loop_priority() const override;
 
   void dump_config() override;
 
@@ -37,6 +41,8 @@ class PCF8574Component : public Component, public i2c::I2CDevice {
   uint16_t output_mask_{0x00};
   /// The state read in read_gpio_ - 1 means HIGH, 0 means LOW
   uint16_t input_mask_{0x00};
+  /// Flags to check if read previously during this loop
+  uint8_t was_previously_read_ = {0x00};
   bool pcf8575_;  ///< TRUE->16-channel PCF8575, FALSE->8-channel PCF8574
 };
 
