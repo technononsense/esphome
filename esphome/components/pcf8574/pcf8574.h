@@ -42,7 +42,7 @@ class PCF8574Component : public Component, public i2c::I2CDevice {
   /// The state read in read_gpio_ - 1 means HIGH, 0 means LOW
   uint16_t input_mask_{0x00};
   /// Flags to check if read previously during this loop
-  uint8_t was_previously_read_ = {0x00};
+  uint16_t was_previously_read_ = {0x00};
   bool pcf8575_;  ///< TRUE->16-channel PCF8575, FALSE->8-channel PCF8574
 };
 
